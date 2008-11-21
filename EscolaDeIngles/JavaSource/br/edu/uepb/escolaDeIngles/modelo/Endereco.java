@@ -1,6 +1,10 @@
 package br.edu.uepb.escolaDeIngles.modelo;
 
-public class Endereco {
+import java.io.Serializable;
+
+public class Endereco implements Serializable {
+
+	private static final long serialVersionUID = -5346665003419859180L;
 
 	private String logradouro;
 	

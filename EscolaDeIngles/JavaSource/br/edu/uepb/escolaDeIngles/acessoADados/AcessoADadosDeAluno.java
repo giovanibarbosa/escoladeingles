@@ -7,11 +7,8 @@ import java.io.IOException;
 
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 
-
 /**
- *
  * Interface de acesso a dados para aluno
- *
  */
 public interface AcessoADadosDeAluno {
 
