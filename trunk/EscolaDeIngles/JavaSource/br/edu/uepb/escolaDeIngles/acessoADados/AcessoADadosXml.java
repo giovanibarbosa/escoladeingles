@@ -1,7 +1,4 @@
-/**
- * 
- */
-package acessoADados;
+package br.edu.uepb.escolaDeIngles.acessoADados;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -13,23 +10,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.UUID;
 
-import modelo.Aluno;
+import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 
-/**
- * 
- * Implementação de persistência em XML para acesso a dados de aluno
- * 
- */
-public class AlunoDaoXml implements AlunoDao {
 
+public class AcessoADadosXml {
+	
 	public final String CAMINHO_ARQUIVO = "dados.xml";
 
 	public Map<String, Aluno> alunos;
 
 	@SuppressWarnings("unchecked")
-	public AlunoDaoXml() throws IOException {
+	protected AcessoADadosXml() throws IOException {
 		InputStream stream = null;
 		XMLDecoder xmlDecoder = null;
 		try {
@@ -46,45 +38,12 @@ public class AlunoDaoXml implements AlunoDao {
 		}
 	}
 
-	private void reiniciaBase() throws IOException {
+	protected void reiniciaBase() throws IOException {
 		alunos = new TreeMap<String, Aluno>();
 		salvaParaDisco(alunos);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see acessoADados.AlunoDao#obtem(int)
-	 */
-	@Override
-	public Aluno obtem(String id) {
-		return alunos.get(id);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see acessoADados.AlunoDao#remove(int)
-	 */
-	@Override
-	public void remove(String id) throws IOException {
-		alunos.remove(id);
-		salvaParaDisco(alunos);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see acessoADados.AlunoDao#salva(modelo.Aluno)
-	 */
-	@Override
-	public void salva(Aluno aluno) throws IOException {
-		aluno.setId(UUID.randomUUID().toString());
-		alunos.put(aluno.getId(), aluno);
-		salvaParaDisco(alunos);
-	}
-
-	private void salvaParaDisco(Map<String, Aluno> alunos) throws IOException {
+	
+	protected void salvaParaDisco(Map<String, Aluno> alunos) throws IOException {
 		OutputStream stream = null;
 		XMLEncoder xmlEncoder = null;
 		try {
@@ -97,10 +56,4 @@ public class AlunoDaoXml implements AlunoDao {
 		}
 
 	}
-
-	@Override
-	public void removeTodos() throws IOException {
-		reiniciaBase();
-	}
-
 }

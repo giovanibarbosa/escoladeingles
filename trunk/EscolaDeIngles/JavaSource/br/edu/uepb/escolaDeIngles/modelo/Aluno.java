@@ -1,7 +1,7 @@
 /**
  * 
  */
-package modelo;
+package br.edu.uepb.escolaDeIngles.modelo;
 
 import java.io.Serializable;
 
@@ -11,15 +11,15 @@ import java.io.Serializable;
  */
 public class Aluno implements Serializable {
 
-	private static final long serialVersionUID = 1643852460320936894L;
+	private static final long serialVersionUID = -856808752049212633L;
 
 	private String id;
 	
 	private String nome;
 	
-	private String endereco;
+	private Endereco endereco;
 	
-	private String Telefone;
+	private String telefone;
 
 	/**
 	 * @return the nome
@@ -39,7 +39,7 @@ public class Aluno implements Serializable {
 	/**
 	 * @return the endereco
 	 */
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
@@ -47,7 +47,7 @@ public class Aluno implements Serializable {
 	 * @param endereco
 	 *            the endereco to set
 	 */
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
@@ -55,7 +55,7 @@ public class Aluno implements Serializable {
 	 * @return the telefone
 	 */
 	public String getTelefone() {
-		return Telefone;
+		return telefone;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Aluno implements Serializable {
 	 *            the telefone to set
 	 */
 	public void setTelefone(String telefone) {
-		Telefone = telefone;
+		this.telefone = telefone;
 	}
 
 	/**

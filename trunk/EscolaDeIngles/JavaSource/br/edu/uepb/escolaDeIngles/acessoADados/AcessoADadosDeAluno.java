@@ -1,18 +1,19 @@
 /**
  * 
  */
-package acessoADados;
+package br.edu.uepb.escolaDeIngles.acessoADados;
 
 import java.io.IOException;
 
-import modelo.Aluno;
+import br.edu.uepb.escolaDeIngles.modelo.Aluno;
+
 
 /**
  *
  * Interface de acesso a dados para aluno
  *
  */
-public interface AlunoDao {
+public interface AcessoADadosDeAluno {
 
 	public void salva(Aluno aluno) throws IOException;
 	
