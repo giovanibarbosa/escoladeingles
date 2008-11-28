@@ -45,4 +45,9 @@ public class Facade {
 		log.info("Encerra matrícula");
 		gerenciadorDeAluno.encerraMatricula(id, data);
 	}
+	
+	public void inserePagamento(String id, String tipoDePagamento, String data, String valor){
+		log.info("Registra pagamento");
+		gerenciadorDeAluno.inserePagamento(id, tipoDePagamento, data, valor);
+	}
 }

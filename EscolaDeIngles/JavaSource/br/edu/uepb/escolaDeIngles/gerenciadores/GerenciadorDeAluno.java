@@ -16,4 +16,6 @@ public interface GerenciadorDeAluno {
 
 	void encerraMatricula(String id, String data);
 
+	void inserePagamento(String id, String tipoDePagamento, String data, String valor);
+
 }

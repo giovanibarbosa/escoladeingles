@@ -1,0 +1,27 @@
+# Testes para US3 - Registro de pagamentos
+
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+
+expectError "Não é possível registrar pagamento para um aluno não matriculado" inserePagamento id=${idAluno1} tipo="Dinheiro" data="27/12/2008" valor=150.0
+
+matriculaAluno id=${idAluno1} data="27/12/2008"
+
+inserePagamento id=${idAluno1} tipo="Dinheiro" data="27/12/2008" valor=150.0
+inserePagamento id=${idAluno1} tipo="Cartão" data="28/01/2009" valor=151.1
+inserePagamento id=${idAluno1} tipo="Cheque" data="01/03/2009" valor=152.2
+
+expect 150.0 getAtributoDoAluno id=${idAluno1} atributo="pagamentos[0].valor"
+expect "Dinheiro" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[0].tipo"
+expect "Sat Dec 27 00:00:00 GMT-03:00 2008" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[0].data"
+
+expect 151.1 getAtributoDoAluno id=${idAluno1} atributo="pagamentos[1].valor"
+expect "Cartão" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[1].tipo"
+expect "Wed Jan 28 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[1].data"
+
+expect 152.2 getAtributoDoAluno id=${idAluno1} atributo="pagamentos[2].valor"
+expect "Cheque" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[2].tipo"
+expect "Sun Mar 01 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="pagamentos[2].data"
+
+encerraMatricula id=${idAluno1} data="28/12/2008"
+
+expectError "Não é possível registrar pagamento para um aluno não matriculado" inserePagamento id=${idAluno1} tipo="Cheque" data="01/03/2009" valor=152.2
