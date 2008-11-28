@@ -1,0 +1,13 @@
+# Testes para us 6
+
+zeraSistema
+expectError "Aluno não cadastrado." agendaExame id=1 data="27/12/2008"
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+
+agendaExame id=${idAluno1} data="27/12/2008"
+agendaExame id=${idAluno1} data="28/01/2009"
+agendaExame id=${idAluno1} data="01/03/2009"
+
+expect "Sat Dec 27 00:00:00 GMT-03:00 2008" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[0].data"
+expect "Wed Jan 28 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[1].data"
+expect "Sun Mar 01 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[2].data"

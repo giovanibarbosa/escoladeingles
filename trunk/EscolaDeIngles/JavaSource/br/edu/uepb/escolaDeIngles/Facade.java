@@ -50,4 +50,14 @@ public class Facade {
 		log.info("Registra pagamento");
 		gerenciadorDeAluno.inserePagamento(id, tipoDePagamento, data, valor);
 	}
+	
+	public void promoveAluno(String id){
+		log.info("Promove aluno");
+		gerenciadorDeAluno.promoveAluno(id);
+	}
+	
+	public void agendaExame(String id, String data){
+		log.info("Agenda exame");
+		gerenciadorDeAluno.agendaExame(id, data);
+	}
 }

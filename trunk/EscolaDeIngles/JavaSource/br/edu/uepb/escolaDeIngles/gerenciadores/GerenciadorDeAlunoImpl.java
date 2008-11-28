@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import br.edu.uepb.escolaDeIngles.acessoADados.AcessoADadosDeAluno;
+import br.edu.uepb.escolaDeIngles.modelo.AgendamentoDeExame;
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 import br.edu.uepb.escolaDeIngles.modelo.Pagamento;
 import br.edu.uepb.escolaDeIngles.modelo.TipoDePagamento;
@@ -188,5 +189,21 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 		pagamento.setData(converteStringParaData(data));
 		pagamento.setValor(new Double(valor));
 		aluno.getPagamentos().add(pagamento);
+	}
+
+	@Override
+	public void promoveAluno(String id) {
+		Aluno aluno = getAluno(id);
+		aluno.promoveAluno();
+		acessoADadosDeAluno.salva(aluno);
+	}
+
+	@Override
+	public void agendaExame(String id, String data) {
+		Aluno aluno = getAluno(id);
+		AgendamentoDeExame agendamento = new AgendamentoDeExame();
+		agendamento.setData(converteStringParaData(data));
+		aluno.getAgendamentosDeExames().add(agendamento);
+		acessoADadosDeAluno.salva(aluno);
 	}
 }

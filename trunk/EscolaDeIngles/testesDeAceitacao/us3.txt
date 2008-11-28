@@ -1,5 +1,9 @@
 # Testes para US3 - Registro de pagamentos
 
+zeraSistema
+
+expectError "Aluno não cadastrado." inserePagamento id=1 tipo="Dinheiro" data="27/12/2008" valor=150.0
+
 idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
 
 expectError "Não é possível registrar pagamento para um aluno não matriculado" inserePagamento id=${idAluno1} tipo="Dinheiro" data="27/12/2008" valor=150.0

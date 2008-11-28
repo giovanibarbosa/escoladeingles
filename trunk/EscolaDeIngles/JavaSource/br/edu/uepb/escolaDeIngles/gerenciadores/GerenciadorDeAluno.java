@@ -18,4 +18,8 @@ public interface GerenciadorDeAluno {
 
 	void inserePagamento(String id, String tipoDePagamento, String data, String valor);
 
+	void promoveAluno(String id);
+
+	void agendaExame(String id, String data);
+
 }
