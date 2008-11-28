@@ -3,8 +3,6 @@
  */
 package br.edu.uepb.escolaDeIngles.acessoADados;
 
-import java.io.IOException;
-
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 
 /**
@@ -12,12 +10,12 @@ import br.edu.uepb.escolaDeIngles.modelo.Aluno;
  */
 public interface AcessoADadosDeAluno {
 
-	public void salva(Aluno aluno) throws IOException;
+	public void salva(Aluno aluno);
 	
-	public void remove(String id) throws IOException;
+	public void remove(String id);
 	
 	public Aluno obtem(String id);
 
-	public void removeTodos() throws IOException;
+	public void removeTodos();
 	
 }

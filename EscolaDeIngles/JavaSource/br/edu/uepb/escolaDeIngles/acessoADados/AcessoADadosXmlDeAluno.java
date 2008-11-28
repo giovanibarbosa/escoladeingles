@@ -1,10 +1,9 @@
-/**
- * 
- */
 package br.edu.uepb.escolaDeIngles.acessoADados;
 
-import java.io.IOException;
 import java.util.UUID;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 
@@ -13,9 +12,11 @@ import br.edu.uepb.escolaDeIngles.modelo.Aluno;
  * Implementação de persistência em XML para acesso a dados de aluno
  * 
  */
-public class AcessoADadosXmlDeAluno extends AcessoADadosXml implements AcessoADadosDeAluno{
+public class AcessoADadosXmlDeAluno extends AcessoADadosXml implements AcessoADadosDeAluno {
 
-	protected AcessoADadosXmlDeAluno() throws IOException {
+	private static Log log = LogFactory.getLog(AcessoADadosXmlDeAluno.class);
+	
+	public AcessoADadosXmlDeAluno() {
 		super();
 	}
 
@@ -26,6 +27,7 @@ public class AcessoADadosXmlDeAluno extends AcessoADadosXml implements AcessoADa
 	 */
 	@Override
 	public Aluno obtem(String id) {
+		log.debug("Parâmetros: " + id);
 		return alunos.get(id);
 	}
 
@@ -35,7 +37,7 @@ public class AcessoADadosXmlDeAluno extends AcessoADadosXml implements AcessoADa
 	 * @see acessoADados.AlunoDao#remove(int)
 	 */
 	@Override
-	public void remove(String id) throws IOException {
+	public void remove(String id) {
 		alunos.remove(id);
 		salvaParaDisco(alunos);
 	}
@@ -46,14 +48,16 @@ public class AcessoADadosXmlDeAluno extends AcessoADadosXml implements AcessoADa
 	 * @see acessoADados.AlunoDao#salva(modelo.Aluno)
 	 */
 	@Override
-	public void salva(Aluno aluno) throws IOException {
-		aluno.setId(UUID.randomUUID().toString());
-		alunos.put(aluno.getId(), aluno);
+	public void salva(Aluno aluno) {
+		if (aluno.getId() == null) {
+			aluno.setId(UUID.randomUUID().toString());
+			alunos.put(aluno.getId(), aluno);
+		}
 		salvaParaDisco(alunos);
 	}
 
 	@Override
-	public void removeTodos() throws IOException {
+	public void removeTodos() {
 		reiniciaBase();
 	}
 

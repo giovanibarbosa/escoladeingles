@@ -14,13 +14,13 @@ import java.util.TreeMap;
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 
 public class AcessoADadosXml {
-	
+
 	public final String CAMINHO_ARQUIVO = "dados.xml";
 
-	public Map<String, Aluno> alunos;
+	protected Map<String, Aluno> alunos;
 
 	@SuppressWarnings("unchecked")
-	protected AcessoADadosXml() throws IOException {
+	protected AcessoADadosXml() {
 		InputStream stream = null;
 		XMLDecoder xmlDecoder = null;
 		try {
@@ -33,25 +33,35 @@ public class AcessoADadosXml {
 			if (xmlDecoder != null) {
 				xmlDecoder.close();
 			}
-			stream.close();
+			try {
+				stream.close();
+			} catch (IOException e) {
+				throw new EntradaESaidaException(e);
+			}
 		}
 	}
 
-	protected void reiniciaBase() throws IOException {
+	protected void reiniciaBase() {
 		alunos = new TreeMap<String, Aluno>();
 		salvaParaDisco(alunos);
 	}
-	
-	protected void salvaParaDisco(Map<String, Aluno> alunos) throws IOException {
+
+	protected void salvaParaDisco(Map<String, Aluno> alunos) {
 		OutputStream stream = null;
 		XMLEncoder xmlEncoder = null;
 		try {
 			stream = new FileOutputStream(CAMINHO_ARQUIVO);
 			xmlEncoder = new XMLEncoder(stream);
 			xmlEncoder.writeObject(alunos);
+		} catch (IOException ex) {
+			throw new EntradaESaidaException(ex);
 		} finally {
 			xmlEncoder.close();
-			stream.close();
+			try {
+				stream.close();
+			} catch (IOException e) {
+				throw new EntradaESaidaException(e);
+			}
 		}
 
 	}
