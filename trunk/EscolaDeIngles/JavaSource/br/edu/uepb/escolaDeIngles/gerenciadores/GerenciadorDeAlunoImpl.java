@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 
 import br.edu.uepb.escolaDeIngles.acessoADados.AcessoADadosDeAluno;
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
+import br.edu.uepb.escolaDeIngles.modelo.Pagamento;
+import br.edu.uepb.escolaDeIngles.modelo.TipoDePagamento;
 
 public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 
@@ -140,13 +142,7 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 			throw new ImpossivelExecutarMetodoException("Aluno não pode ser matriculado. Este já encontra-se matriculado.");
 		}
 		
-		Date dataEscolhida;
-		try {
-			dataEscolhida = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-		} catch (ParseException e) {
-			log.error("Data inválida", e);
-			throw new ImpossivelExecutarMetodoException("Data inválida");
-		}
+		Date dataEscolhida = converteStringParaData(data);
 
 		aluno.getMatricula().setDataDeMatricula(dataEscolhida);
 
@@ -161,14 +157,36 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 			throw new ImpossivelExecutarMetodoException("Aluno não pode ter matricula encerrada se não está matriculado.");
 		}
 		
-		Date dataEscolhida;
+		Date dataEscolhida = converteStringParaData(data);
+		aluno.getMatricula().setDataDeConclusao(dataEscolhida);
+		acessoADadosDeAluno.salva(aluno);
+	}
+
+	/**
+	 * @param data
+	 * @param dataEscolhida
+	 * @return
+	 */
+	private Date converteStringParaData(String data) {
 		try {
-			dataEscolhida = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+			return new SimpleDateFormat("dd/MM/yyyy").parse(data);
 		} catch (ParseException e) {
 			log.error("Data inválida", e);
 			throw new ImpossivelExecutarMetodoException("Data inválida");
 		}
-		aluno.getMatricula().setDataDeConclusao(dataEscolhida);
-		acessoADadosDeAluno.salva(aluno);
+	}
+
+	@Override
+	public void inserePagamento(String id, String tipoDePagamento, String data, String valor) {
+		Aluno aluno = getAluno(id);
+		if (!aluno.isMatriculado()){
+			throw new ImpossivelExecutarMetodoException("Não é possível registrar pagamento para um aluno não matriculado");
+		}
+		
+		Pagamento pagamento = new Pagamento();
+		pagamento.setTipo(Enum.valueOf(TipoDePagamento.class, tipoDePagamento));
+		pagamento.setData(converteStringParaData(data));
+		pagamento.setValor(new Double(valor));
+		aluno.getPagamentos().add(pagamento);
 	}
 }

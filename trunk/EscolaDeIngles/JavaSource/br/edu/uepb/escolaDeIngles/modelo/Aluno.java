@@ -4,6 +4,8 @@
 package br.edu.uepb.escolaDeIngles.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Representa um aluno
@@ -11,7 +13,7 @@ import java.io.Serializable;
  */
 public class Aluno implements Serializable {
 
-	private static final long serialVersionUID = -722126437620395111L;
+	private static final long serialVersionUID = 347390633594022742L;
 
 	private String id;
 
@@ -22,6 +24,8 @@ public class Aluno implements Serializable {
 	private String telefone;
 
 	private Matricula matricula;
+	
+	private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
 
 	public Aluno() {
 		matricula = new Matricula();
@@ -105,5 +109,19 @@ public class Aluno implements Serializable {
 	
 	public boolean isMatriculado(){
 		return getMatricula().getDataDeMatricula() != null && getMatricula().getDataDeConclusao() == null;
+	}
+
+	/**
+	 * @return the pagamentos
+	 */
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+	/**
+	 * @param pagamentos the pagamentos to set
+	 */
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
 	}
 }
