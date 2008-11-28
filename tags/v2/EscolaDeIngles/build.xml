@@ -1,0 +1,56 @@
+<project name="escolaDeIngles" basedir="." default="compila">
+
+	<!-- Local system paths -->
+	<property name="src.dir" value="${basedir}/JavaSource" />
+	<property name="bin.dir" value="${basedir}/bin" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="doc.dir" value="${basedir}/doc" />
+	<property name="tests.dir" value="${basedir}/testesDeAceitacao" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="prepara">
+		<tstamp />
+	</target>
+
+	<target name="limpa" description="Prepare for clean build">
+		<delete dir="${bin.dir}" />
+		<delete dir="${doc.dir}" />
+
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<target name="copia" description="copia os arquivos de propriedades para o diretório bin">
+		<copy todir="${bin.dir}" includeEmptyDirs="no">
+			<fileset dir="JavaSource">
+				<patternset>
+					<include name="**/*.conf" />
+					<include name="**/*.properties" />
+					<include name="**/*.xml" />
+				</patternset>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compila" depends="prepara,copia">
+		<javac srcdir="JavaSource" destdir="${bin.dir}">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="doc">
+		<javadoc sourcepath="${src.dir}" packagenames="br.edu.uepb.escolaDeIngles.*" destdir="${doc.dir}" author="true" />
+	</target>
+
+	<target name="testa" description="Executa testes de aceitação e de unidade">
+		<exec dir="${tests.dir}" os="Windows XP" executable="cmd">
+			<arg value="/c teste.bat" />
+		</exec>
+	</target>
+
+</project>

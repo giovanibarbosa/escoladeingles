@@ -1,0 +1,33 @@
+# Teste de aceitação para a US1 - Manutenção de Aluno
+
+zeraSistema
+
+expectError "Aluno não cadastrado." getAtributoDoAluno id=1 atributo="nome"
+
+# Verificando salvar
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+idAluno2=criaAluno nome="Aluno para teste 2" endereco="Rua qualquer. Cidade qualquer/PB" telefone="83 44444444"
+
+# Verificando obter informações
+expect "Aluno para teste 1" getAtributoDoAluno id=${idAluno1} atributo="nome"
+expect "83 33333333" getAtributoDoAluno id=${idAluno1} atributo="telefone"
+expect "" getAtributoDoAluno id=${idAluno1} atributo="endereco"
+
+expect "Aluno para teste 2" getAtributoDoAluno id=${idAluno2} atributo="nome"
+expect "83 44444444" getAtributoDoAluno id=${idAluno2} atributo="telefone"
+expect "Rua qualquer. Cidade qualquer/PB" getAtributoDoAluno id=${idAluno2} atributo="endereco"
+
+# Verificando atualizar informações 
+modificaAluno id=${idAluno1} atributo="nome" valor="Novo nome para aluno 1"
+modificaAluno id=${idAluno1} atributo="endereco" valor="Novo endereco para aluno 1"
+modificaAluno id=${idAluno1} atributo="telefone" valor="88 88888888"
+
+expect "Novo nome para aluno 1" getAtributoDoAluno id=${idAluno1} atributo="nome"
+expect "Novo endereco para aluno 1" getAtributoDoAluno id=${idAluno1} atributo="endereco"
+expect "88 88888888" getAtributoDoAluno id=${idAluno1} atributo="telefone"
+
+removeAluno id=${idAluno1}
+
+expectError "Aluno não cadastrado." getAtributoDoAluno id=${idAluno1} atributo="nome"
+
+quit
