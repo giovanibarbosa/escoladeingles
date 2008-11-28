@@ -17,7 +17,7 @@ public class Aluno implements Serializable {
 	
 	private String nome;
 	
-	private Endereco endereco;
+	private String endereco;
 
 	private String telefone;
 
@@ -39,7 +39,7 @@ public class Aluno implements Serializable {
 	/**
 	 * @return the endereco
 	 */
-	public Endereco getEndereco() {
+	public String getEndereco() {
 		return endereco;
 	}
 
@@ -47,7 +47,7 @@ public class Aluno implements Serializable {
 	 * @param endereco
 	 *            the endereco to set
 	 */
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 
