@@ -5,13 +5,29 @@ import java.util.Date;
 
 public class Matricula implements Serializable {
 	
-	private static final long serialVersionUID = -3864844780342879199L;
+	private static final long serialVersionUID = -3191091069420761116L;
 
 	private int periodoAtual = 0;
 	
 	private Date dataDeMatricula;
 	
 	private Date dataDeConclusao;
+	
+	private Aluno aluno;
+
+	/**
+	 * @return the aluno
+	 */
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	/**
+	 * @param aluno the aluno to set
+	 */
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
 
 	/**
 	 * @return the periodoAtual
@@ -54,6 +70,4 @@ public class Matricula implements Serializable {
 	public void setDataDeConclusao(Date dataDeConclusao) {
 		this.dataDeConclusao = dataDeConclusao;
 	}
-	
-	
 }
