@@ -1,6 +1,7 @@
 # Teste de aceitação para a US2 - Matricular aluno
 
 zeraSistema
+
 idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
 
 expect "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
