@@ -11,15 +11,21 @@ import java.io.Serializable;
  */
 public class Aluno implements Serializable {
 
-	private static final long serialVersionUID = -856808752049212633L;
+	private static final long serialVersionUID = -722126437620395111L;
 
 	private String id;
-	
+
 	private String nome;
-	
+
 	private String endereco;
 
 	private String telefone;
+
+	private Matricula matricula;
+
+	public Aluno() {
+		matricula = new Matricula();
+	}
 
 	/**
 	 * @return the nome
@@ -74,9 +80,30 @@ public class Aluno implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the matricula
+	 */
+	public Matricula getMatricula() {
+		return matricula;
+	}
+
+	/**
+	 * @param matricula
+	 *            the matricula to set
+	 */
+	public void setMatricula(Matricula matricula) {
+		if (matricula != null)
+			this.matricula = matricula;
+	}
+	
+	public boolean isMatriculado(){
+		return getMatricula().getDataDeMatricula() != null && getMatricula().getDataDeConclusao() == null;
 	}
 }

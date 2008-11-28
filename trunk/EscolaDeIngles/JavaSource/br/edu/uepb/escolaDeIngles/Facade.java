@@ -35,4 +35,14 @@ public class Facade {
 		log.info("Recuperando Atributo do aluno");
 		return gerenciadorDeAluno.getAtributoDoAluno(id, atributo);
 	}
+	
+	public void matriculaAluno(String id, String data){
+		log.info("Matricula aluno");
+		gerenciadorDeAluno.matriculaAluno(id, data);
+	}
+	
+	public void encerraMatricula(String id, String data){
+		log.info("Encerra matrícula");
+		gerenciadorDeAluno.encerraMatricula(id, data);
+	}
 }

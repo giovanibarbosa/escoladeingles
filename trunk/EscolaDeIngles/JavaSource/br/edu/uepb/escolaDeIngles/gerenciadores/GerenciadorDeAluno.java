@@ -2,14 +2,18 @@ package br.edu.uepb.escolaDeIngles.gerenciadores;
 
 public interface GerenciadorDeAluno {
 
-	public void zeraSistema();
+	void zeraSistema();
 	
-	public String criaAluno(String nome, String endereco, String telefone);
+	String criaAluno(String nome, String endereco, String telefone);
 
-	public void removeAluno(String id);
+	void removeAluno(String id);
 
-	public void modificaAluno(String id, String atributo, String valor);
+	void modificaAluno(String id, String atributo, String valor);
 
-	public String getAtributoDoAluno(String id, String atributo);
+	String getAtributoDoAluno(String id, String atributo);
+	
+	void matriculaAluno(String id, String data);
+
+	void encerraMatricula(String id, String data);
 
 }

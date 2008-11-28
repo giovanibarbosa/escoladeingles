@@ -1,0 +1,27 @@
+# Teste de aceitação para a US2 - Matricular aluno
+
+zeraSistema
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+
+expect "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
+expect "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeConclusao"
+
+matriculaAluno id=${idAluno1} data="27/12/2008"
+expectDifferent "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
+expect "Sat Dec 27 00:00:00 GMT-03:00 2008" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
+expect "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeConclusao"
+
+expectError "Aluno não pode ser removido enquanto estiver matriculado." removeAluno id=${idAluno1}
+expectError "Aluno não pode ser matriculado. Este já encontra-se matriculado." matriculaAluno id=${idAluno1} data="27/12/2008"
+
+encerraMatricula id=${idAluno1} data="28/01/2009"
+expectDifferent "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
+expect "Sat Dec 27 00:00:00 GMT-03:00 2008" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeMatricula"
+expectDifferent "" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeConclusao"
+expect "Wed Jan 28 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="matricula.dataDeConclusao"
+
+expectError "Aluno não pode ter matricula encerrada se não está matriculado." encerraMatricula id=${idAluno1} data="28/01/2009"
+
+## tentando encerrar matrícula de aluno não matriculado.
+idAluno2=criaAluno nome="Aluno para teste 2" endereco="" telefone="83 33333333"
+expectError "Aluno não pode ter matricula encerrada se não está matriculado." encerraMatricula id=${idAluno2} data="28/01/2009"
