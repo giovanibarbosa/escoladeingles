@@ -7,15 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.uepb.escolaDeIngles.gerenciadores.ImpossivelExecutarMetodoException;
-
 /**
  * Representa um aluno
  * 
  */
 public class Aluno implements Serializable {
 
-	private static final long serialVersionUID = 7974840322719352423L;
+	private static final long serialVersionUID = 4497027761186147373L;
 
 	private String id;
 
@@ -26,14 +24,25 @@ public class Aluno implements Serializable {
 	private String telefone;
 
 	private Matricula matricula;
-	
-	private int estagioAtual = 1;
-	
+
+	private List<Estagio> estagios = new ArrayList<Estagio>();
+
 	private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+
+	private Estagio estagioAtual;
 	
 	private List<AgendamentoDeExame> agendamentosDeExames = new ArrayList<AgendamentoDeExame>();
 
 	public Aluno() {
+		estagios.add(new Estagio(1));
+		estagios.add(new Estagio(2));
+		estagios.add(new Estagio(3));
+		estagios.add(new Estagio(4));
+		estagios.add(new Estagio(5));
+		estagios.add(new Estagio(6));
+		estagios.add(new Estagio(7));
+		estagios.add(new Estagio(8));
+		estagioAtual = estagios.get(0);
 		matricula = new Matricula();
 	}
 
@@ -112,9 +121,10 @@ public class Aluno implements Serializable {
 		if (matricula != null)
 			this.matricula = matricula;
 	}
-	
-	public boolean isMatriculado(){
-		return getMatricula().getDataDeMatricula() != null && getMatricula().getDataDeConclusao() == null;
+
+	public boolean isMatriculado() {
+		return getMatricula().getDataDeMatricula() != null
+				&& getMatricula().getDataDeConclusao() == null;
 	}
 
 	/**
@@ -125,7 +135,8 @@ public class Aluno implements Serializable {
 	}
 
 	/**
-	 * @param pagamentos the pagamentos to set
+	 * @param pagamentos
+	 *            the pagamentos to set
 	 */
 	public void setPagamentos(List<Pagamento> pagamentos) {
 		this.pagamentos = pagamentos;
@@ -134,15 +145,12 @@ public class Aluno implements Serializable {
 	/**
 	 * @return the estagioAtual
 	 */
-	public int getEstagioAtual() {
+	public Estagio getEstagioAtual() {
 		return estagioAtual;
 	}
-	
-	public void promoveAluno(){
-		if(getEstagioAtual() == 8){
-			throw new ImpossivelExecutarMetodoException("Impossível promover aluno. Máximo de estágios alcançado.");
-		}
-		++estagioAtual;
+
+	public void setEstagioAtual(Estagio estagioAtual) {
+		this.estagioAtual = estagioAtual;
 	}
 
 	/**
@@ -153,11 +161,27 @@ public class Aluno implements Serializable {
 	}
 
 	/**
-	 * @param agendamentosDeExames the agendamentosDeExames to set
+	 * @param agendamentosDeExames
+	 *            the agendamentosDeExames to set
 	 */
 	public void setAgendamentosDeExames(
 			List<AgendamentoDeExame> agendamentosDeExames) {
 		this.agendamentosDeExames = agendamentosDeExames;
 	}
-	
+
+	/**
+	 * @return the estagios
+	 */
+	public List<Estagio> getEstagios() {
+		return estagios;
+	}
+
+	/**
+	 * @param estagios
+	 *            the estagios to set
+	 */
+	public void setEstagios(List<Estagio> estagios) {
+		this.estagios = estagios;
+	}
+
 }

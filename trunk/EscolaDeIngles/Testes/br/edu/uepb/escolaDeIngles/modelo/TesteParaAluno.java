@@ -6,8 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import br.edu.uepb.escolaDeIngles.gerenciadores.ImpossivelExecutarMetodoException;
-
 public class TesteParaAluno {
 
 	@Test
@@ -42,13 +40,5 @@ public class TesteParaAluno {
 	public void verificaEstagioDoAlunoRecemCriado(){
 		Aluno aluno = new Aluno();
 		Assert.assertEquals(1, aluno.getEstagioAtual());
-	}
-	
-	@Test(expected=ImpossivelExecutarMetodoException.class)
-	public void verificaMaximoDeEstagios(){
-		Aluno aluno = new Aluno();
-		for (int i = 0; i < 9; i++) {
-			aluno.promoveAluno();
-		}
 	}
 }

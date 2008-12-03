@@ -194,7 +194,10 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 	@Override
 	public void promoveAluno(String id) {
 		Aluno aluno = getAluno(id);
-		aluno.promoveAluno();
+		if (aluno.getEstagioAtual().getNumero() == 8){
+			throw new ImpossivelExecutarMetodoException("Impossível promover aluno. Máximo de estágios alcançado.");
+		}
+		aluno.setEstagioAtual(aluno.getEstagios().get(aluno.getEstagioAtual().getNumero()));
 		acessoADadosDeAluno.salva(aluno);
 	}
 
