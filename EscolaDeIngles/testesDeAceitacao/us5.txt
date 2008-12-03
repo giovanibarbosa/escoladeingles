@@ -4,20 +4,22 @@ zeraSistema
 expectError "Aluno não cadastrado." promoveAluno id=1
 idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
 
-expect 1 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 1 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 2 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 2 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 3 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 3 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 4 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 4 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 5 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 5 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 6 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 6 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 7 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 7 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 promoveAluno id=${idAluno1}
-expect 8 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 8 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 
 expectError "Impossível promover aluno. Máximo de estágios alcançado." promoveAluno id=${idAluno1}
+
+quit

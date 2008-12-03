@@ -26,3 +26,5 @@ expectError "Aluno não pode ter matricula encerrada se não está matriculado." en
 ## tentando encerrar matrícula de aluno não matriculado.
 idAluno2=criaAluno nome="Aluno para teste 2" endereco="" telefone="83 33333333"
 expectError "Aluno não pode ter matricula encerrada se não está matriculado." encerraMatricula id=${idAluno2} data="28/01/2009"
+
+quit

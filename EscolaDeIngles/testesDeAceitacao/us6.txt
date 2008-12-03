@@ -11,3 +11,5 @@ agendaExame id=${idAluno1} data="01/03/2009"
 expect "Sat Dec 27 00:00:00 GMT-03:00 2008" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[0].data"
 expect "Wed Jan 28 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[1].data"
 expect "Sun Mar 01 00:00:00 GMT-03:00 2009" getAtributoDoAluno id=${idAluno1} atributo="agendamentosDeExames[2].data"
+
+quit

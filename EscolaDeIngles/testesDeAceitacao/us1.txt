@@ -12,12 +12,12 @@ idAluno2=criaAluno nome="Aluno para teste 2" endereco="Rua qualquer. Cidade qual
 expect "Aluno para teste 1" getAtributoDoAluno id=${idAluno1} atributo="nome"
 expect "83 33333333" getAtributoDoAluno id=${idAluno1} atributo="telefone"
 expect "" getAtributoDoAluno id=${idAluno1} atributo="endereco"
-expect 1 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual"
+expect 1 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.numero"
 
 expect "Aluno para teste 2" getAtributoDoAluno id=${idAluno2} atributo="nome"
 expect "83 44444444" getAtributoDoAluno id=${idAluno2} atributo="telefone"
 expect "Rua qualquer. Cidade qualquer/PB" getAtributoDoAluno id=${idAluno2} atributo="endereco"
-expect 1 getAtributoDoAluno id=${idAluno2} atributo="estagioAtual"
+expect 1 getAtributoDoAluno id=${idAluno2} atributo="estagioAtual.numero"
 
 # Verificando atualizar informações 
 modificaAluno id=${idAluno1} atributo="nome" valor="Novo nome para aluno 1"
