@@ -10,8 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import br.edu.uepb.escolaDeIngles.acessoADados.AcessoADadosDeAluno;
-import br.edu.uepb.escolaDeIngles.modelo.AgendamentoDeExame;
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
+import br.edu.uepb.escolaDeIngles.modelo.Avaliacao;
 import br.edu.uepb.escolaDeIngles.modelo.Pagamento;
 import br.edu.uepb.escolaDeIngles.modelo.TipoDePagamento;
 
@@ -203,10 +203,27 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 
 	@Override
 	public void agendaExame(String id, String data) {
+		log.debug("Agendando exame");
 		Aluno aluno = getAluno(id);
-		AgendamentoDeExame agendamento = new AgendamentoDeExame();
-		agendamento.setData(converteStringParaData(data));
-		aluno.getAgendamentosDeExames().add(agendamento);
+		Date dataObtida = converteStringParaData(data);
+		log.debug("Data obtida: " + dataObtida);
+		aluno.getEstagios().get(aluno.getEstagioAtual().getNumero() - 1).setDataDoExame(dataObtida);
+		log.debug("Data do exame: " + aluno.getEstagioAtual().getDataDoExame());
+		acessoADadosDeAluno.salva(aluno);
+	}
+
+	@Override
+	public void insereNota(String id, long nota, String data) {
+		Aluno aluno = getAluno(id);
+		
+		if(nota < 0.0 || nota > 10.0){
+			throw new ImpossivelExecutarMetodoException("Nota deve ser um valor entre 0.0 e 10.0");
+		}
+		
+		Avaliacao avaliacao = new Avaliacao();
+		avaliacao.setNota(nota);
+		avaliacao.setData(converteStringParaData(data));
+		aluno.getEstagioAtual().getAvaliacoes().add(avaliacao);
 		acessoADadosDeAluno.salva(aluno);
 	}
 }

@@ -22,4 +22,6 @@ public interface GerenciadorDeAluno {
 
 	void agendaExame(String id, String data);
 
+	void insereNota(String id, long nota, String data);
+
 }

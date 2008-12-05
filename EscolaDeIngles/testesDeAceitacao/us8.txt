@@ -1,0 +1,34 @@
+# US 8
+
+expectError "Aluno não cadastrado." insereNota id=${idAluno1} nota=10 data="28/12/2008"
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+ 
+insereNota id=${idAluno1} nota=10 data="28/12/2008"
+insereNota id=${idAluno1} nota=0 data="28/12/2008"
+expectError "Nota deve ser um valor entre 0.0 e 10.0" insereNota id=${idAluno1} nota=-1 data="28/12/2008"
+expectError "Nota deve ser um valor entre 0.0 e 10.0" insereNota id=${idAluno1} nota=11 data="28/12/2008"
+
+expect 10 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[0].nota"
+expect 0 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[1].nota"
+
+# Promovendo aluno para o segundo estágio
+promoveAluno id=${idAluno1}
+
+insereNota id=${idAluno1} nota=9 data="29/12/2008"
+insereNota id=${idAluno1} nota=8 data="30/12/2008"
+insereNota id=${idAluno1} nota=7 data="31/12/2008"
+insereNota id=${idAluno1} nota=5 data="01/01/2009"
+
+expect 9 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[0].nota"
+expect 8 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[1].nota"
+expect 7 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[2].nota"
+expect 5 getAtributoDoAluno id=${idAluno1} atributo="estagioAtual.avaliacoes[3].nota"
+
+expect 10 getAtributoDoAluno id=${idAluno1} atributo="estagios[0].avaliacoes[0].nota"
+expect 0 getAtributoDoAluno id=${idAluno1} atributo="estagios[0].avaliacoes[1].nota"
+expect 9 getAtributoDoAluno id=${idAluno1} atributo="estagios[1].avaliacoes[0].nota"
+expect 8 getAtributoDoAluno id=${idAluno1} atributo="estagios[1].avaliacoes[1].nota"
+expect 7 getAtributoDoAluno id=${idAluno1} atributo="estagios[1].avaliacoes[2].nota"
+expect 5 getAtributoDoAluno id=${idAluno1} atributo="estagios[1].avaliacoes[3].nota"
+
+quit

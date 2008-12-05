@@ -30,8 +30,6 @@ public class Aluno implements Serializable {
 	private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
 
 	private Estagio estagioAtual;
-	
-	private List<AgendamentoDeExame> agendamentosDeExames = new ArrayList<AgendamentoDeExame>();
 
 	public Aluno() {
 		estagios.add(new Estagio(1));
@@ -151,22 +149,6 @@ public class Aluno implements Serializable {
 
 	public void setEstagioAtual(Estagio estagioAtual) {
 		this.estagioAtual = estagioAtual;
-	}
-
-	/**
-	 * @return the agendamentosDeExames
-	 */
-	public List<AgendamentoDeExame> getAgendamentosDeExames() {
-		return agendamentosDeExames;
-	}
-
-	/**
-	 * @param agendamentosDeExames
-	 *            the agendamentosDeExames to set
-	 */
-	public void setAgendamentosDeExames(
-			List<AgendamentoDeExame> agendamentosDeExames) {
-		this.agendamentosDeExames = agendamentosDeExames;
 	}
 
 	/**

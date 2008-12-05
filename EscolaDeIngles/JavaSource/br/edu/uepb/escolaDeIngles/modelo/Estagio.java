@@ -2,13 +2,16 @@ package br.edu.uepb.escolaDeIngles.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Estagio implements Serializable {
 
-	private static final long serialVersionUID = -5215805923060399845L;
+	private static final long serialVersionUID = -4925265185977912778L;
 
 	private int numero;
+	
+	private Date dataDoExame;
 
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 
@@ -96,6 +99,20 @@ public class Estagio implements Serializable {
 	 */
 	public void setFaltas(List<Falta> faltas) {
 		this.faltas = faltas;
+	}
+
+	/**
+	 * @return the dataDoExame
+	 */
+	public Date getDataDoExame() {
+		return dataDoExame;
+	}
+
+	/**
+	 * @param dataDoExame the dataDoExame to set
+	 */
+	public void setDataDoExame(Date dataDoExame) {
+		this.dataDoExame = dataDoExame;
 	}
 
 }
