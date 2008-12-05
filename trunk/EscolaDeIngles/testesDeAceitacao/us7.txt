@@ -1,7 +1,5 @@
 # Testes para US 7
 
 zeraSistema
-expectError "Aluno não cadastrado." imprimeTitulo id=1
-idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
 
 quit

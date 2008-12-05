@@ -60,4 +60,9 @@ public class Facade {
 		log.info("Agenda exame");
 		gerenciadorDeAluno.agendaExame(id, data);
 	}
+	
+	public void insereNota(String id, long nota, String data){
+		log.info("Insere nota");
+		gerenciadorDeAluno.insereNota(id, nota, data);
+	}
 }
