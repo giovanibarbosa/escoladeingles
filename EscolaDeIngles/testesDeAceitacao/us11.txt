@@ -1,0 +1,37 @@
+# US 11
+zeraSistema
+
+expectError "Aluno não cadastrado." registraFalta id="0" data="05/12/2008"
+
+# Cria aluno para testes
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+idAluno2=criaAluno nome="Aluno para teste 2" endereco="Rua qualquer. Cidade qualquer/PB" telefone="83 44444444"
+
+expectError "Aluno não matriculado" registraFalta id=${idAluno1} data="05/12/2008"
+
+matriculaAluno id=${idAluno1} data="01/12/2008"
+
+# Cadastrar faltas
+registraFalta id=${idAluno1} data="05/12/2008"
+registraFalta id=${idAluno1} data="06/12/2008"
+
+# Promover aluno com sucesso
+promoveAluno id=${idAluno1}
+
+# Cadastrar faltas
+registraFalta id=${idAluno1} data="05/12/2008"
+registraFalta id=${idAluno1} data="06/12/2008"
+registraFalta id=${idAluno1} data="07/12/2008"
+registraFalta id=${idAluno1} data="08/12/2008"
+registraFalta id=${idAluno1} data="09/12/2008"
+registraFalta id=${idAluno1} data="10/12/2008"
+registraFalta id=${idAluno1} data="11/12/2008"
+registraFalta id=${idAluno1} data="12/12/2008"
+registraFalta id=${idAluno1} data="13/12/2008"
+registraFalta id=${idAluno1} data="14/12/2008"
+
+# Receber mensagem de erro com faltas em demasia.
+expectError "Aluno possui muitas faltas. Não pode ser promovido." promoveAluno id=${idAluno1}
+
+zeraSistema
+quit

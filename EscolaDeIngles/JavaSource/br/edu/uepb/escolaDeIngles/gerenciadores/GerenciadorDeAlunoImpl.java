@@ -3,7 +3,11 @@ package br.edu.uepb.escolaDeIngles.gerenciadores;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
@@ -12,11 +16,23 @@ import org.apache.commons.logging.LogFactory;
 import br.edu.uepb.escolaDeIngles.acessoADados.AcessoADadosDeAluno;
 import br.edu.uepb.escolaDeIngles.modelo.Aluno;
 import br.edu.uepb.escolaDeIngles.modelo.Avaliacao;
+import br.edu.uepb.escolaDeIngles.modelo.Falta;
 import br.edu.uepb.escolaDeIngles.modelo.Pagamento;
+import br.edu.uepb.escolaDeIngles.modelo.ResumoFinanceiro;
 import br.edu.uepb.escolaDeIngles.modelo.TipoDePagamento;
 
-public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
+/**
+ * Implementação padrão para o GerenciadorDeAluno
+ *
+ */
+public strictfp class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 
+	private long VALOR_DA_MENSALIDADE = 150; 
+	
+	private int TOTAL_DE_AULAS_POR_ESTAGIO = 30;
+	
+	private long PORCENTAGEM_PEMITIDA_DE_FALTAS = 25; // 75,0 % de presença
+	
 	private static Log log = LogFactory.getLog(GerenciadorDeAlunoImpl.class);
 
 	private AcessoADadosDeAluno acessoADadosDeAluno;
@@ -108,8 +124,12 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 		log.debug("Parâmetros " + id + ", " + atributo);
 
 		Aluno aluno = getAluno(id);
+		return getAtributo(atributo, aluno);
+	}
+
+	private <T> String getAtributo(String atributo, T object) {
 		try {
-			String retorno = BeanUtils.getProperty(aluno, atributo);
+			String retorno = BeanUtils.getProperty(object, atributo);
 			return retorno != null ? retorno.toString() : "";
 		} catch (IllegalAccessException e) {
 			log.error("Acesso ilegal", e);
@@ -187,7 +207,7 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 		Pagamento pagamento = new Pagamento();
 		pagamento.setTipo(Enum.valueOf(TipoDePagamento.class, tipoDePagamento));
 		pagamento.setData(converteStringParaData(data));
-		pagamento.setValor(new Double(valor));
+		pagamento.setValor(new Long(valor));
 		aluno.getPagamentos().add(pagamento);
 	}
 
@@ -197,6 +217,11 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 		if (aluno.getEstagioAtual().getNumero() == 8){
 			throw new ImpossivelExecutarMetodoException("Impossível promover aluno. Máximo de estágios alcançado.");
 		}
+		
+		if (aluno.getEstagioAtual().getFaltas().size() >= (TOTAL_DE_AULAS_POR_ESTAGIO * PORCENTAGEM_PEMITIDA_DE_FALTAS / 100)){
+			throw new ImpossivelExecutarMetodoException("Aluno possui muitas faltas. Não pode ser promovido.");
+		}
+		
 		aluno.setEstagioAtual(aluno.getEstagios().get(aluno.getEstagioAtual().getNumero()));
 		acessoADadosDeAluno.salva(aluno);
 	}
@@ -226,4 +251,63 @@ public class GerenciadorDeAlunoImpl implements GerenciadorDeAluno {
 		aluno.getEstagioAtual().getAvaliacoes().add(avaliacao);
 		acessoADadosDeAluno.salva(aluno);
 	}
+
+	@Override
+	public String emiteRelatorioFinanceiro(String id, String data, String atributo) {
+		Aluno aluno = getAluno(id);
+		ResumoFinanceiro resumo = new ResumoFinanceiro();
+		
+		Calendar dataDeMatricula = Calendar.getInstance();
+		dataDeMatricula.setTime(aluno.getMatricula().getDataDeMatricula());
+		
+		Calendar dataDoRelatorio = Calendar.getInstance();
+		dataDoRelatorio.setTime(converteStringParaData(data));
+		
+		int diasDecorridosParaAtraso = dataDoRelatorio.get(Calendar.DAY_OF_MONTH) - dataDeMatricula.get(Calendar.DAY_OF_MONTH);
+		resumo.setValorDevido(VALOR_DA_MENSALIDADE / 30 * diasDecorridosParaAtraso);
+		
+		Iterator<Pagamento> it = aluno.getPagamentos().iterator();
+		while (it.hasNext()) {
+			Pagamento pagamento = it.next();
+			if(pagamento.getData().compareTo(dataDoRelatorio.getTime()) <= 0){
+				resumo.setValorPago(new Long(resumo.getValorPago() + pagamento.getValor()));
+			}
+		}
+		
+		return getAtributo(atributo, resumo);
+	}
+
+	@Override
+	public String emiteHistoricoDePagamentos(String id, String dataDeInicio, String dataDeTermino, String posicao, String atributo) {
+		Aluno aluno = getAluno(id);
+		
+		Date dataParaInicio = converteStringParaData(dataDeInicio);
+		Date dataParaTermino = converteStringParaData(dataDeTermino);
+		
+		if (dataParaInicio.after(dataParaTermino)){
+			throw new ImpossivelExecutarMetodoException("Data de Início deve ser menor ou igual à data de término");
+		}
+		
+		
+		List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+		for (Pagamento pagamento : aluno.getPagamentos()) {
+			if(pagamento.getData().compareTo(dataParaTermino) <= 0 && pagamento.getData().compareTo(dataParaInicio) >= 0){
+				pagamentos.add(pagamento);
+			}
+		}
+		return getAtributo(atributo, pagamentos.get(new Integer(posicao)));
+	}
+
+	@Override
+	public void registraFalta(String id, String data) {
+		Aluno aluno = getAluno(id);
+		
+		if(!aluno.isMatriculado()){
+			throw new ImpossivelExecutarMetodoException("Aluno não matriculado");
+		}
+		
+		Falta falta = new Falta();
+		falta.setData(converteStringParaData(data));
+		aluno.getEstagioAtual().getFaltas().add(falta);
+	} 
 }

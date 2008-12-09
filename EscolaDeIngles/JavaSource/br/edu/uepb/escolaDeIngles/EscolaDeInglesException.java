@@ -1,5 +1,9 @@
 package br.edu.uepb.escolaDeIngles;
 
+/**
+ * Exceção base para o sistema Escola de Inglês
+ *
+ */
 public class EscolaDeInglesException extends RuntimeException {
 
 	private static final long serialVersionUID = -1964473664509724140L;

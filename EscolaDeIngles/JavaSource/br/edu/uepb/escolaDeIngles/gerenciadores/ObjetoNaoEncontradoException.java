@@ -2,6 +2,10 @@ package br.edu.uepb.escolaDeIngles.gerenciadores;
 
 import br.edu.uepb.escolaDeIngles.EscolaDeInglesException;
 
+/**
+ * Exceção lançada quando não é possível encontrar um objeto em uma operação de consulta
+ *
+ */
 public class ObjetoNaoEncontradoException extends EscolaDeInglesException {
 
 	private static final long serialVersionUID = 1889513045986681404L;

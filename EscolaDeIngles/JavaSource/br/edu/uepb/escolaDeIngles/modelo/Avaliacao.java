@@ -3,6 +3,10 @@ package br.edu.uepb.escolaDeIngles.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Representa uma avaliação de promoção de estágio
+ *
+ */
 public strictfp class Avaliacao implements Serializable {
 	
 	private static final long serialVersionUID = -4179955218112286698L;

@@ -10,7 +10,7 @@ import br.edu.uepb.escolaDeIngles.gerenciadores.GerenciadorDeAlunoImpl;
 
 /**
  * 
- * Fábrica para acesso a Dados
+ * Fábrica para acesso a Dados e Gerenciadores
  */
 public class FabricaDeObjetos {
 
