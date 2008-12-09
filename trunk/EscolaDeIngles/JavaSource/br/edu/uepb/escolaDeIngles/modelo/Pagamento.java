@@ -3,13 +3,17 @@ package br.edu.uepb.escolaDeIngles.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Representa uma entrada de pagamento realizada pelo aluno 
+ *
+ */
 public strictfp class Pagamento implements Serializable {
 
 	private static final long serialVersionUID = -1710290818062590012L;
 
 	private Date data;
 	
-	private double valor;
+	private long valor;
 	
 	private TipoDePagamento tipo;
 
@@ -30,14 +34,14 @@ public strictfp class Pagamento implements Serializable {
 	/**
 	 * @return the valor
 	 */
-	public double getValor() {
+	public long getValor() {
 		return valor;
 	}
 
 	/**
 	 * @param valor the valor to set
 	 */
-	public void setValor(double valor) {
+	public void setValor(long valor) {
 		this.valor = valor;
 	}
 

@@ -2,6 +2,11 @@ package br.edu.uepb.escolaDeIngles.gerenciadores;
 
 import br.edu.uepb.escolaDeIngles.EscolaDeInglesException;
 
+/**
+ * Exceção lançada quando não é possível executar um método do Gerenciador de
+ * Aluno, seja por regra de negócio, seja por falha na execução.
+ * 
+ */
 public class ImpossivelExecutarMetodoException extends EscolaDeInglesException {
 
 	private static final long serialVersionUID = 166201085969615471L;

@@ -1,0 +1,66 @@
+# US 4
+zeraSistema
+
+# Cria aluno para testes
+idAluno1=criaAluno nome="Aluno para teste 1" endereco="" telefone="83 33333333"
+idAluno2=criaAluno nome="Aluno para teste 2" endereco="Rua qualquer. Cidade qualquer/PB" telefone="83 44444444"
+
+expectError "Não é possível registrar pagamento para um aluno não matriculado" inserePagamento id=${idAluno1} tipo="Dinheiro" data="27/12/2008" valor=150.0
+matriculaAluno id=${idAluno1} data="01/12/2008"
+matriculaAluno id=${idAluno2} data="05/12/2009"
+
+# Registra pagamentos para aluno 1
+inserePagamento id=${idAluno1} tipo="Dinheiro" data="01/12/2008" valor=150
+inserePagamento id=${idAluno1} tipo="Cartão" data="01/01/2009" valor=151
+inserePagamento id=${idAluno1} tipo="Cheque" data="01/02/2009" valor=152
+
+# Registra pagamentos para aluno 2
+inserePagamento id=${idAluno2} tipo="Dinheiro" data="01/12/2008" valor=150
+inserePagamento id=${idAluno2} tipo="Cartão" data="01/01/2009" valor=150
+inserePagamento id=${idAluno2} tipo="Cheque" data="01/03/2009" valor=150
+
+promoveAluno id=${idAluno2}
+inserePagamento id=${idAluno2} tipo="Dinheiro" data="04/04/2009" valor=150
+inserePagamento id=${idAluno2} tipo="Cartão" data="03/05/2009" valor=150
+inserePagamento id=${idAluno2} tipo="Cheque" data="01/06/2009" valor=150
+
+promoveAluno id=${idAluno2}
+inserePagamento id=${idAluno2} tipo="Dinheiro" data="01/08/2009" valor=150
+inserePagamento id=${idAluno2} tipo="Cartão" data="01/09/2009" valor=150
+inserePagamento id=${idAluno2} tipo="Cheque" data="01/10/2009" valor=150
+
+# Verifica financeiro para aluno 1
+
+expect 150 emiteRelatorioFinanceiro id=${idAluno1} data="01/12/2008" atributo="valorPago"
+expect 0 emiteRelatorioFinanceiro id=${idAluno1} data="01/12/2008" atributo="valorDevido"
+expect 301 emiteRelatorioFinanceiro id=${idAluno1} data="01/01/2009" atributo="valorPago"
+expect 0 emiteRelatorioFinanceiro id=${idAluno1} data="01/12/2008" atributo="valorDevido"
+expect 453 emiteRelatorioFinanceiro id=${idAluno1} data="01/02/2009" atributo="valorPago"
+expect 0 emiteRelatorioFinanceiro id=${idAluno1} data="01/12/2008" atributo="valorDevido"
+expect 70 emiteRelatorioFinanceiro id=${idAluno1} data="15/12/2008" atributo="valorDevido"
+
+# Verifica financeiro para aluno 2
+expect 0 emiteRelatorioFinanceiro id=${idAluno2} data="30/11/2008" atributo="valorPago"
+expect 150 emiteRelatorioFinanceiro id=${idAluno2} data="01/12/2008" atributo="valorPago"
+expect 300 emiteRelatorioFinanceiro id=${idAluno2} data="01/01/2009" atributo="valorPago"
+expect 450 emiteRelatorioFinanceiro id=${idAluno2} data="01/03/2009" atributo="valorPago"
+expect 450 emiteRelatorioFinanceiro id=${idAluno2} data="01/04/2009" atributo="valorPago"
+expect 600 emiteRelatorioFinanceiro id=${idAluno2} data="04/04/2009" atributo="valorPago"
+expect 600 emiteRelatorioFinanceiro id=${idAluno2} data="01/05/2009" atributo="valorPago"
+expect 750 emiteRelatorioFinanceiro id=${idAluno2} data="03/05/2009" atributo="valorPago"
+expect 900 emiteRelatorioFinanceiro id=${idAluno2} data="01/06/2009" atributo="valorPago"
+expect 1050 emiteRelatorioFinanceiro id=${idAluno2} data="01/08/2009" atributo="valorPago"
+expect 1200 emiteRelatorioFinanceiro id=${idAluno2} data="01/09/2009" atributo="valorPago"
+expect 1350 emiteRelatorioFinanceiro id=${idAluno2} data="01/10/2009" atributo="valorPago"
+
+expectError "Data de Início deve ser menor ou igual à data de término" emiteHistoricoDePagamentos id=${idAluno1} dataDeInicio="01/12/2008" dataDeTermino="30/11/2008" posicao=0 atributo="valor" 
+
+# Verifica pagamentos entre duas datas para aluno 1
+expect 150 emiteHistoricoDePagamentos id=${idAluno1} dataDeInicio="01/12/2008" dataDeTermino="01/12/2008" posicao=0 atributo="valor"
+expect "Dinheiro" emiteHistoricoDePagamentos id=${idAluno1} dataDeInicio="01/12/2008" dataDeTermino="01/12/2008" posicao=0 atributo="tipo"
+
+# Verifica pagamentos entre duas datas para aluno 2 
+expect 150 emiteHistoricoDePagamentos id=${idAluno2} dataDeInicio="01/12/2008" dataDeTermino="01/12/2008" posicao=0 atributo="valor"
+expect "Dinheiro" emiteHistoricoDePagamentos id=${idAluno2} dataDeInicio="01/12/2008" dataDeTermino="01/12/2008" posicao=0 atributo="tipo"
+
+quit

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Representa o estágio e informações vinculadas
+ *
+ */
 public class Estagio implements Serializable {
 
 	private static final long serialVersionUID = -4925265185977912778L;

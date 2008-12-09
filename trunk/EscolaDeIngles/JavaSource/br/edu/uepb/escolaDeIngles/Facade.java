@@ -65,4 +65,19 @@ public class Facade {
 		log.info("Insere nota");
 		gerenciadorDeAluno.insereNota(id, nota, data);
 	}
+	
+	public String emiteRelatorioFinanceiro (String id, String data, String atributo){
+		log.info("Emite relatório financeiro");
+		return gerenciadorDeAluno.emiteRelatorioFinanceiro(id, data, atributo);
+	}
+	
+	public String emiteHistoricoDePagamentos(String id, String dataDeInicio, String dataDeTermino, String posicao, String atributo){
+		log.info("Emite histórico");
+		return gerenciadorDeAluno.emiteHistoricoDePagamentos(id, dataDeInicio, dataDeTermino, posicao, atributo);
+	}
+	
+	public void registraFalta(String id, String data){
+		log.info("Registra falta");
+		gerenciadorDeAluno.registraFalta(id, data);
+	}
 }

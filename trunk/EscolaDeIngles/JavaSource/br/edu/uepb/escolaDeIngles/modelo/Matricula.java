@@ -3,6 +3,10 @@ package br.edu.uepb.escolaDeIngles.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Mantém informações sobre a matrícula do aluno
+ *
+ */
 public class Matricula implements Serializable {
 	
 	private static final long serialVersionUID = -3191091069420761116L;
